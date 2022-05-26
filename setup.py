@@ -10,24 +10,30 @@ root_dir = path.abspath(path.dirname(__file__))
 
 
 def _requirements():
-    return [name.rstrip() for name in open(path.join(root_dir, 'requirements.txt'), encoding='utf-8').readlines()]
+    return [
+        name.rstrip()
+        for name in open(path.join(root_dir, "requirements.txt"), encoding="utf-8").readlines()
+    ]
 
 
 def _test_requirements():
-    return [name.rstrip() for name in open(path.join(root_dir, 'test_requirements.txt'), encoding='utf-8').readlines()]
+    return [
+        name.rstrip()
+        for name in open(path.join(root_dir, "test_requirements.txt"), encoding="utf-8").readlines()
+    ]
 
 
-with open(path.join(root_dir, package_name, '__init__.py'), encoding='utf-8') as f:
+with open(path.join(root_dir, package_name, "__init__.py"), encoding="utf-8") as f:
     init_text = f.read()
-    version = re.search(r'__version__ = [\'\"](.+?)[\'\"]', init_text).group(1)
-    author = re.search(r'__author__ =\s*[\'\"](.+?)[\'\"]', init_text).group(1)
-    url = re.search(r'__url__ =\s*[\'\"](.+?)[\'\"]', init_text).group(1)
+    version = re.search(r"__version__ = [\'\"](.+?)[\'\"]", init_text).group(1)
+    author = re.search(r"__author__ =\s*[\'\"](.+?)[\'\"]", init_text).group(1)
+    url = re.search(r"__url__ =\s*[\'\"](.+?)[\'\"]", init_text).group(1)
 
 assert version
 assert author
 assert url
 
-with open('README.md', encoding='utf-8') as f:
+with open("README.md", encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
@@ -35,19 +41,17 @@ setup(
     version=version,
     description="Yabumi: Slack notifications.",
     long_description=long_description,
-    long_description_content_type='text/markdown',
+    long_description_content_type="text/markdown",
     author=author,
     url=url,
-
-    install_requires = _requirements(),
-    tests_requires = _test_requirements(),
+    install_requires=_requirements(),
+    tests_requires=_test_requirements(),
     include_package_data=True,
-
     license="License :: OSI Approved :: MIT License",
-    packages=find_packages(exclude=('tests')),
-    test_suite='tests',
+    packages=find_packages(exclude=("tests")),
+    test_suite="tests",
     entry_points="""
     [console_scripts]
     yabumi = yabumi.__main__:main
     """,
-    )
+)
