@@ -72,7 +72,12 @@ def main():
     slack = slackweb.Slack(url=_slack_url)
     mention = "<{}>\n".format(dict_toml[environment]['target_username']) if 'target_username' in dict_toml[environment] else ""
 
-    slack.notify(text="{} 以下の労働の監視を開始するよ！".format(mention), attachments=generate_attachments(direc, 'success'))
+    pre_message = dict_toml[environment]['pre_message'] if 'pre_message' in dict_toml[environment] else "Monitoring the following processes"
+    success_message = dict_toml[environment]['success_message'] if 'success_message' in dict_toml[environment] else "The following process was successfully completed."
+    failure_message = dict_toml[environment]['failure_message'] if 'failure_message' in dict_toml[environment] else "The following process was terminated due to an abnormal situation."
+
+
+    slack.notify(text="{}{}".format(mention, pre_message), attachments=generate_attachments(direc, 'success'))
 
     return_code = 1
     start = time.time()
@@ -80,9 +85,9 @@ def main():
     elapsed_time = time.time() - start
 
     if output.returncode == 0:
-        slack.notify(text="{} 以下の労働は無事に終了したよ!:ok_woman:".format(mention), attachments=generate_attachments(direc, 'success', elapsed_time))
+        slack.notify(text="{}{}".format(mention, success_message), attachments=generate_attachments(direc, 'success', elapsed_time))
     else:
-        slack.notify(text="{} 以下の労働に異常事態が発生したよ!:no_good:".format(mention), attachments=generate_attachments(direc, 'failure', elapsed_time,))
+        slack.notify(text="{}{}".format(mention, failure_message), attachments=generate_attachments(direc, 'failure', elapsed_time,))
 
 
 if __name__ == '__main__':
