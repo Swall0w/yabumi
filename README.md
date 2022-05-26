@@ -1,4 +1,4 @@
-<div align="center"> <img src="https://github.com/FastAccounting/yabumi/blob/main/docs/logo.png" width="800"/> </div>
+<div align="center"> <img src="https://github.com/Swall0w/yabumi/blob/main/docs/logo.png" width="800"/> </div>
 # Yabumi
 ## Install
 ```bash
