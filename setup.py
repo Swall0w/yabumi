@@ -43,7 +43,7 @@ setup(
     tests_requires = _test_requirements(),
     include_package_data=True,
 
-    license=license,
+    license="License :: OSI Approved :: MIT License",
     packages=find_packages(exclude=('tests')),
     test_suite='tests',
     entry_points="""
